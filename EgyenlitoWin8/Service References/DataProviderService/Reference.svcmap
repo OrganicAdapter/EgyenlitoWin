@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="a9c6ce1f-1ec2-46ea-bc3d-e24ac3e56eb2" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.ObjectModel.ObservableCollection`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>false</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://egyenlito.asphostpage.net/Egyenlito/WCF/DataProviderService.svc?wsdl" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="DataProviderService.wsdl" MetadataType="Wsdl" ID="8f1ad53b-0edb-43cb-a33a-2f1f93e224a6" SourceId="1" SourceUrl="http://egyenlito.asphostpage.net/Egyenlito/WCF/DataProviderService.svc?wsdl" />
+    <MetadataFile FileName="DataProviderService.xsd" MetadataType="Schema" ID="3ec134bf-3c04-4133-a5e8-037d478a611c" SourceId="1" SourceUrl="http://egyenlito.asphostpage.net/Egyenlito/WCF/DataProviderService.svc?xsd=xsd0" />
+    <MetadataFile FileName="DataProviderService1.xsd" MetadataType="Schema" ID="d08f966f-ccdd-4634-8364-39b6d7775a84" SourceId="1" SourceUrl="http://egyenlito.asphostpage.net/Egyenlito/WCF/DataProviderService.svc?xsd=xsd1" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

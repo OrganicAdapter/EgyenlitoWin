@@ -1,0 +1,64 @@
+﻿<Page
+    x:Class="EgyenlitoWin8.PDFReaderView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:EgyenlitoWin8"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ViewModels="using:EgyenlitoPortableLIB.ViewModels"
+    xmlns:converters="using:EgyenlitoWin8.Converters"
+    mc:Ignorable="d">
+
+    <Page.TopAppBar>
+        <CommandBar Background="#FF000064">
+            <CommandBar.SecondaryCommands>
+                <AppBarButton Icon="Back" Label="Vissza" Command="{Binding GoBack}"/>
+            </CommandBar.SecondaryCommands>
+        </CommandBar>
+    </Page.TopAppBar>
+    
+    <Page.BottomAppBar>
+        <AppBar Background="#FF000064">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="5*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                
+                <Slider Grid.Column="1"
+                        MaxWidth="300"
+                        Minimum="0" Maximum="500" 
+                        Value="{Binding ZoomLevel, Mode=TwoWay}"
+                        Orientation="Horizontal"
+                        FlowDirection="RightToLeft"
+                        IsThumbToolTipEnabled="False"/>
+            </Grid>
+        </AppBar>
+    </Page.BottomAppBar>
+
+    <Page.DataContext>
+        <ViewModels:PDFReaderViewModel />
+    </Page.DataContext>
+    
+    <Page.Resources>
+        <converters:StringToBitmapConverter x:Name="StringToBitmapConverter" />
+        <converters:IntegerToMarginConverter x:Name="IntegerToMarginConverter" /> 
+    </Page.Resources>
+
+    <Grid x:Name="mainGrid">
+        <FlipView x:Name="list"
+                  ItemsSource="{Binding PDFPages}"
+                  Background="White">
+            <FlipView.ItemTemplate>
+                <DataTemplate>
+                    <ScrollViewer Padding="{Binding ElementName=mainGrid, Path=DataContext.ZoomLevel, Converter={StaticResource IntegerToMarginConverter}, Mode=OneWay}"
+                                  ZoomMode="Disabled">
+                        <Image Stretch="Uniform" 
+                               Source="{Binding ElementName=list, Path=SelectedValue, Converter={StaticResource StringToBitmapConverter}}" />
+                    </ScrollViewer>
+                </DataTemplate>
+            </FlipView.ItemTemplate>
+        </FlipView>
+    </Grid>
+</Page>

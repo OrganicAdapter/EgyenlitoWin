@@ -1,0 +1,67 @@
+﻿<Page
+    x:Class="EgyenlitoWin8.ArticlesView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:EgyenlitoWin8"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ViewModels="using:EgyenlitoPortableLIB.ViewModels"
+    xmlns:Interactivity="using:Microsoft.Xaml.Interactivity" xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
+    mc:Ignorable="d">
+    <Page.BottomAppBar>
+        <CommandBar Background="#FF000064">
+            <CommandBar.PrimaryCommands>
+                <AppBarButton Icon="Mail" Label="Levél" Command="{Binding SendEmail}" />
+                <AppBarButton Icon="Like" Label="Facebook" Command="{Binding OpenWebPage}" CommandParameter="https://www.facebook.com/uj.egyenlito.folyoirat" />
+                <AppBarButton Icon="World" Label="Weblap" Command="{Binding OpenWebPage}" CommandParameter="http://www.ujegyenlito.hu" />
+            </CommandBar.PrimaryCommands>
+        </CommandBar>
+    </Page.BottomAppBar>
+
+    <Page.TopAppBar>
+		<CommandBar Background="#FF000064">
+			<CommandBar.SecondaryCommands>
+				<AppBarButton Icon="Back" Label="Vissza" Command="{Binding GoBack}"/>
+			</CommandBar.SecondaryCommands>
+		</CommandBar>
+	</Page.TopAppBar>
+    
+    <Page.DataContext>
+        <ViewModels:ArticlesViewModel />
+    </Page.DataContext>
+
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="3*" />
+        </Grid.RowDefinitions>
+
+        <Rectangle Grid.Row="0" 
+                   Fill="#00a8c9" />
+        <Image Grid.Row="0"
+               Source="/Images/logo.png"
+               MaxHeight="200" />
+        
+        <ListBox x:Name="list" 
+                 Grid.Row="2"
+                 ItemsSource="{Binding Articles}"
+                 HorizontalAlignment="Center"
+                 Background="Transparent"
+                 Padding="20">
+            <Interactivity:Interaction.Behaviors>
+                <Core:EventTriggerBehavior EventName="SelectionChanged">
+                    <Core:InvokeCommandAction Command="{Binding Open}" CommandParameter="{Binding SelectedValue, ElementName=list}" />
+                </Core:EventTriggerBehavior>
+            </Interactivity:Interaction.Behaviors>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="{Binding Title}"
+                                   FontSize="20" FontWeight="ExtraBold"/>
+                        <TextBlock Text="{Binding Author}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</Page>
