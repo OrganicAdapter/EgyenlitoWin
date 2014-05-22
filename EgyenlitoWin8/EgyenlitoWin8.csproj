@@ -117,6 +117,11 @@
     </Compile>
     <Compile Include="Converters\IntegerToMarginConverter.cs" />
     <Compile Include="Converters\StringToBitmapConverter.cs" />
+    <Compile Include="FacebookView.xaml.cs">
+      <DependentUpon>FacebookView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Facebook\FacebookHelper.cs" />
+    <Compile Include="Facebook\FacebookManager.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -140,7 +145,6 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <None Include="EgyenlitoWin8_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\ServiceReferences.Designer.ClientConfig" />
   </ItemGroup>
@@ -175,6 +179,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="FacebookView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -185,6 +193,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Facebook">
+      <HintPath>..\packages\Facebook.6.4.2\lib\win8\Facebook.dll</HintPath>
+    </Reference>
     <Reference Include="GalaSoft.MvvmLight">
       <HintPath>..\packages\Portable.MvvmLightLibs.4.3.31.2\lib\netcore45\GalaSoft.MvvmLight.dll</HintPath>
     </Reference>

@@ -32,14 +32,18 @@ namespace EgyenlitoPortableLIB.ViewModels
         public LocalDataManager LocalDataManager { get; set; }
         public ILocalStorage LocalStorage { get; set; }
         public ITaskManager TaskManager { get; set; }
+        public IFacebookManager FacebookManager { get; set; }
 
         public int NewspaperID { get; set; }
         public Article Article { get; set; }
 
 
+        public Uri FacebookUri { get; set; }
+
+
         public MainViewModel()
         {
-            DataManager = new SampleDataManager();
+            //DataManager = new SampleDataManager();
             LocalDataManager = new LocalDataManager();
         }
     }

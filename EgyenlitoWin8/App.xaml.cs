@@ -1,6 +1,7 @@
 ﻿using EgyenlitoPortableLIB.Models;
 using EgyenlitoPortableLIB.Models.DataManagers;
 using EgyenlitoPortableLIB.ViewModels;
+using EgyenlitoWin8.Facebook;
 using EgyenlitoWin8.Others;
 using Microsoft.Practices.Unity;
 using System;
@@ -61,6 +62,7 @@ namespace EgyenlitoWin8
             Main.LocalStorage = new LocalStorage();
             Main.TaskManager = new TaskManager();
             Main.DataManager = new OnlineDataManager();
+            Main.FacebookManager = new FacebookManager();
 
             Main.LocalDataManager.GetArticles();
 

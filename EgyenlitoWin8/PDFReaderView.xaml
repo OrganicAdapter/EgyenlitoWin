@@ -14,6 +14,9 @@
             <CommandBar.SecondaryCommands>
                 <AppBarButton Icon="Back" Label="Vissza" Command="{Binding GoBack}"/>
             </CommandBar.SecondaryCommands>
+            <CommandBar.PrimaryCommands>
+                <AppBarButton Icon="Back" Label="Megosztás" Command="{Binding Authenticate}"/>
+            </CommandBar.PrimaryCommands>
         </CommandBar>
     </Page.TopAppBar>
     

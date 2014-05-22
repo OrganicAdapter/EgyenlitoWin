@@ -31,9 +31,16 @@ namespace EgyenlitoPortableLIB.ViewModels
         }
 
 
+        public RelayCommand<Uri> Post { get; set; }
+        public RelayCommand Authenticate { get; set; }
+
+
         public PDFReaderViewModel()
         {
             DownloadPDF(Main.Article);
+
+            Post = new RelayCommand<Uri>((x) => ExecutePost(x));
+            Authenticate = new RelayCommand(ExecuteAuthenticate);
         }
 
         private async void DownloadPDF(Article article)
@@ -47,6 +54,16 @@ namespace EgyenlitoPortableLIB.ViewModels
                 await Main.WebClient.DownloadFile(article.PdfUri);
                 PDFPages = await Main.PDFRenderer.RenderPDF(Main.Article.ArticleId.ToString());
             }
+        }
+
+        private void ExecutePost(Uri uri)
+        {
+            Main.FacebookManager.Share(uri);   
+        }
+
+        private void ExecuteAuthenticate()
+        {
+            Main.FacebookManager.Authenticate();
         }
     }
 }

@@ -37,6 +37,7 @@
     <Compile Include="Models\DataManagers\IDataManager.cs" />
     <Compile Include="Models\DataManagers\SampleDataManager.cs" />
     <Compile Include="Models\DataManagers\SampleDatas.cs" />
+    <Compile Include="Models\IFacebookManager.cs" />
     <Compile Include="Models\ILocalStorage.cs" />
     <Compile Include="Models\INavigationService.cs" />
     <Compile Include="Models\IPDFRenderer.cs" />
