@@ -58,7 +58,7 @@ namespace EgyenlitoPortableLIB.ViewModels
 
         private void ExecutePost(Uri uri)
         {
-            Main.FacebookManager.Share(uri);   
+            Main.FacebookManager.Post();   
         }
 
         private void ExecuteAuthenticate()

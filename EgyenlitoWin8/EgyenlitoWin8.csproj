@@ -117,9 +117,6 @@
     </Compile>
     <Compile Include="Converters\IntegerToMarginConverter.cs" />
     <Compile Include="Converters\StringToBitmapConverter.cs" />
-    <Compile Include="FacebookView.xaml.cs">
-      <DependentUpon>FacebookView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Facebook\FacebookHelper.cs" />
     <Compile Include="Facebook\FacebookManager.cs" />
     <Compile Include="MainPage.xaml.cs">
@@ -176,10 +173,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="ArticlesView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="FacebookView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

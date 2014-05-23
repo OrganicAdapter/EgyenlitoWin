@@ -3,11 +3,16 @@ using EgyenlitoPortableLIB.ViewModels;
 using Facebook;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Core;
+using Windows.Security.Authentication.Web;
 using Windows.System;
+using Windows.UI.Core;
 using Windows.UI.Popups;
+using Windows.UI.Xaml;
 
 namespace EgyenlitoWin8.Facebook
 {
@@ -16,80 +21,125 @@ namespace EgyenlitoWin8.Facebook
         public FacebookClient Client { get; set; }
         public FacebookHelper Helper { get; set; }
 
-        public string Access_Token { get; set; }
+        public CoreDispatcher Dispatcher { get; set; }
 
         public FacebookManager()
         {
             Helper = new FacebookHelper();
+            Client = new FacebookClient();
+
+            Dispatcher = Windows.UI.Core.CoreWindow.GetForCurrentThread().Dispatcher;
         }
 
 
         public async void Authenticate()
         {
-            if (!Helper.IsInternetConnected())
+            try
             {
-                MessageDialog message = new MessageDialog("Nincs internet kapcsolat!");
-                await message.ShowAsync();
+                if (!Helper.IsInternetConnected())
+                {
+                    ShowMessage("Nincs internet kapcsolat!");
+                }
+                else
+                {
+                    var redirectUrl = "https://www.facebook.com/connect/login_success.html";
+
+                    var loginUrl = Client.GetLoginUrl(new
+                    {
+                        client_id = Helper.App_Id,
+                        redirect_uri = redirectUrl,
+                        scope = Helper.ExtendedPermissions,
+                        display = "popup",
+                        response_type = "token"
+                    });
+
+                    var endUri = new Uri(redirectUrl);
+
+                    WebAuthenticationResult WebAuthenticationResult = await WebAuthenticationBroker.AuthenticateAsync(WebAuthenticationOptions.None, loginUrl, endUri);
+
+                    if (WebAuthenticationResult.ResponseStatus == WebAuthenticationStatus.Success)
+                    {
+                        var callbackUri = new Uri(WebAuthenticationResult.ResponseData.ToString());
+                        var facebookOAuthResult = Client.ParseOAuthCallbackUrl(callbackUri);
+                        var accessToken = facebookOAuthResult.AccessToken;
+                        if (String.IsNullOrEmpty(accessToken))
+                        {
+                            // User is not logged in, they may have canceled the login
+                        }
+                        else
+                        {
+                            // User is logged in and token was returned
+                            LoginSucceded(accessToken);
+                        }
+                    }
+                }
             }
-            else
+            catch
             {
-                MainViewModel.Instance.NavigationService.Navigate("EgyenlitoWin8.FacebookView");
-                MainViewModel.Instance.FacebookUri = new Uri(Helper.NavigationUri);
+                ShowMessage("Hiba történt!");
             }
         }
 
-        public void Share(Uri uri)
+        async void ShowMessage(string message)
         {
-            if (uri.AbsoluteUri.Contains("access_token"))
-            {
-                string url = uri.AbsoluteUri;
-                Access_Token = Helper.GetAccesToken(url);
-                Client = new FacebookClient(Access_Token);
-
-                Client.GetCompleted += Client_GetCompleted;
-            }
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
+                {
+                    MessageDialog mesg = new MessageDialog(message);
+                    await mesg.ShowAsync();
+                });
         }
 
-        async void Client_GetCompleted(object sender, FacebookApiEventArgs e)
+        private async void LoginSucceded(string accessToken)
         {
-            var parameters = new Dictionary<string, object>();
+            dynamic parameters = new ExpandoObject();
+            parameters.access_token = accessToken;
+            parameters.fields = "id";
 
-            parameters["access_token"] = Access_Token;
-            parameters["client_id"] = Helper.App_Id;
-            parameters["scope"] = Helper.ExtendedPermissions;
-            
-            await Task.Factory.StartNew(() =>
-            {
-                Client.GetTaskAsync("me");
-            });
+            Client = new FacebookClient(accessToken);
+
+            dynamic result = await Client.GetTaskAsync("me", parameters);
+            parameters = new ExpandoObject();
+            parameters.id = result.id;
+            parameters.access_token = accessToken;
 
             Post();
         }
 
-        async void Post()
+        public async void Post()
         {
-            var parameters = new Dictionary<string, object>();
+            try
+            {
+                var parameters = new Dictionary<string, object>();
+                var article = MainViewModel.Instance.Article;
+                var newspapers = await MainViewModel.Instance.DataManager.GetNewspapers();
+                var img = (from x in newspapers
+                           where x.NewspaperId == MainViewModel.Instance.NewspaperID
+                           select x).First();
 
-            var pdfUri = MainViewModel.Instance.Article.PdfUri;
 
-            parameters["message"] = pdfUri;
-            await Client.PostTaskAsync("me/feed", parameters);
-            Client.PostCompleted += Client_PostCompleted;
+                parameters["link"] = article.PdfUri;
+                parameters["picture"] = img.CoverUri;
+                parameters["name"] = article.Title;
 
-            MainViewModel.Instance.NavigationService.GoBack();
+                Client.PostCompleted += Client_PostCompleted;
+                dynamic result = await Client.PostTaskAsync("me/feed", parameters);
+            }
+            catch
+            {
+                ShowMessage("Hiba történt!");
+            }
         }
 
-        async void Client_PostCompleted(object sender, FacebookApiEventArgs e)
+        void Client_PostCompleted(object sender, FacebookApiEventArgs e)
         {
             if (e.Error != null)
             {
-                MessageDialog msd = new MessageDialog("Hiba történt!");
-                await msd.ShowAsync();
-
-                MainViewModel.Instance.NavigationService.GoBack();
+                ShowMessage("Hiba történt!");
             }
             else
-                MainViewModel.Instance.NavigationService.GoBack();
+            {
+                ShowMessage("A cikket sikeresen megosztottad!");
+            }
         }
     }
 }

@@ -9,6 +9,6 @@ namespace EgyenlitoPortableLIB.Models
     public interface IFacebookManager
     {
         void Authenticate();
-        void Share(Uri uri);
+        void Post();
     }
 }
