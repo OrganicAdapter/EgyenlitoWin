@@ -35,6 +35,7 @@ namespace EgyenlitoPortableLIB.ViewModels
         public IFacebookManager FacebookManager { get; set; }
 
         public int NewspaperID { get; set; }
+        public Newspaper Newspaper { get; set; }
         public Article Article { get; set; }
 
 

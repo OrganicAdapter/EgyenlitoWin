@@ -9,7 +9,7 @@
     xmlns:Interactivity="using:Microsoft.Xaml.Interactivity" xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
     mc:Ignorable="d">
     <Page.BottomAppBar>
-        <CommandBar Background="#FF000064">
+        <CommandBar>
             <CommandBar.PrimaryCommands>
                 <AppBarButton Icon="Mail" Label="Levél" Command="{Binding SendEmail}" />
                 <AppBarButton Icon="Like" Label="Facebook" Command="{Binding OpenWebPage}" CommandParameter="https://www.facebook.com/uj.egyenlito.folyoirat" />
@@ -19,7 +19,7 @@
     </Page.BottomAppBar>
 
     <Page.TopAppBar>
-		<CommandBar Background="#FF000064">
+		<CommandBar>
 			<CommandBar.SecondaryCommands>
 				<AppBarButton Icon="Back" Label="Vissza" Command="{Binding GoBack}"/>
 			</CommandBar.SecondaryCommands>
@@ -30,24 +30,28 @@
         <ViewModels:ArticlesViewModel />
     </Page.DataContext>
 
-    <Grid Background="White">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="3*" />
         </Grid.RowDefinitions>
-
-        <Rectangle Grid.Row="0" 
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        
+        <Rectangle Grid.Row="0" Grid.ColumnSpan="2" 
                    Fill="#00a8c9" />
-        <Image Grid.Row="0"
+        <Image Grid.Row="0" Grid.ColumnSpan="2"
                Source="/Images/logo.png"
                MaxHeight="200" />
         
+        <Image Grid.Row="1" Grid.Column="0"
+               Source="{Binding Main.Newspaper.CoverUri}" />
+        
         <ListBox x:Name="list" 
-                 Grid.Row="2"
-                 ItemsSource="{Binding Articles}"
-                 HorizontalAlignment="Center"
-                 Background="Transparent"
-                 Padding="20">
+                 Grid.Row="2" Grid.Column="1"
+                 ItemsSource="{Binding Articles}">
             <Interactivity:Interaction.Behaviors>
                 <Core:EventTriggerBehavior EventName="SelectionChanged">
                     <Core:InvokeCommandAction Command="{Binding Open}" CommandParameter="{Binding SelectedValue, ElementName=list}" />
@@ -57,7 +61,7 @@
                 <DataTemplate>
                     <StackPanel>
                         <TextBlock Text="{Binding Title}"
-                                   FontSize="20" FontWeight="ExtraBold"/>
+                                   Style="{StaticResource ArticleTextBlock}"/>
                         <TextBlock Text="{Binding Author}" />
                     </StackPanel>
                 </DataTemplate>

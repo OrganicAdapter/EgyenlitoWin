@@ -9,7 +9,7 @@
     x:Class="EgyenlitoWin8.MainPage"
     mc:Ignorable="d">
 	<Page.BottomAppBar>
-		<CommandBar Background="#FF000064">
+		<CommandBar>
 			<CommandBar.PrimaryCommands>
 				<AppBarButton Icon="Mail" Label="Levél" Command="{Binding SendEmail}" />
                 <AppBarButton Icon="Like" Label="Facebook" Command="{Binding OpenWebPage}" CommandParameter="https://www.facebook.com/uj.egyenlito.folyoirat" />
@@ -19,7 +19,7 @@
 	</Page.BottomAppBar>
     
 	<Page.TopAppBar>
-		<CommandBar Background="#FF000063">
+		<CommandBar>
 			<CommandBar.SecondaryCommands>
 				<AppBarButton Icon="Font" Label="Összes cikk" Command="{Binding Open}" CommandParameter="-1" />
 			</CommandBar.SecondaryCommands>
@@ -29,8 +29,8 @@
     <Page.DataContext>
         <ViewModels:NewspapersViewModel />
     </Page.DataContext>
-    
-	<Grid Background="White">
+
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="3*" />
@@ -44,8 +44,7 @@
         
         <GridView x:Name="list" 
                   Grid.Row="1"
-                  ItemsSource="{Binding Newspapers}"
-                  HorizontalAlignment="Center" VerticalAlignment="Center">
+                  ItemsSource="{Binding Newspapers}">
             <Interactivity:Interaction.Behaviors>
                 <Core:EventTriggerBehavior EventName="SelectionChanged">
                     <Core:InvokeCommandAction Command="{Binding Open}" CommandParameter="{Binding SelectedValue.NewspaperId, ElementName=list}" />
@@ -54,39 +53,32 @@
             
             <GridView.ItemTemplate>
                 <DataTemplate>
-                    <Grid Margin="20">
+                    <Grid Style="{StaticResource NewspaperGrid}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
 
                         <Image Grid.Row="0" Grid.RowSpan="2"
-                               Source="{Binding CoverUri}"
-                               MaxHeight="440" 
-                               Margin="10,0,10,5"/>
+                               Source="{Binding CoverUri}" />
                         <Rectangle Grid.Row="1"
-                                   Fill="White"
-                                   Opacity=".8"/>
+                                   Style="{StaticResource ImageRectangle}"/>
                         <StackPanel Grid.Row="1"
-                                    Margin="10">
-                            <Viewbox HorizontalAlignment="Center" 
-                                     MaxHeight="20">
+                                    Style="{StaticResource ImageStackPanel}">
+                            <Viewbox Style="{StaticResource ImageViewbox}">
                                 <TextBlock Text="{Binding Title}"
-                                           Foreground="Black"
-                                           FontWeight="ExtraBold"/>
+                                           Style="{StaticResource ImageTitleTextBlock}"/>
                             </Viewbox>
-                            <Viewbox HorizontalAlignment="Center"
-                                     MaxHeight="20">
+                            <Viewbox Style="{StaticResource ImageViewBox}">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{Binding Pages}" 
-                                               Foreground="Black" />
+                                               Style="{StaticResource ImageTextBlock}" />
                                     <TextBlock Text=" oldal" 
-                                               Foreground="Black" />
+                                               Style="{StaticResource ImageTextBlock}" />
                                 </StackPanel>
                             </Viewbox>
                             <TextBlock Text="{Binding ReleaseDate}" 
-                                       HorizontalAlignment="Center"
-                                       Foreground="Black"/>
+                                       Style="{StaticResource ImageTextBlock}" />
                         </StackPanel>
                     </Grid>
                 </DataTemplate>

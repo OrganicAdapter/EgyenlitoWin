@@ -50,6 +50,8 @@ namespace EgyenlitoPortableLIB.ViewModels
         private void ExecuteOpen(object newspaperID)
         {
             Main.NewspaperID = int.Parse(newspaperID.ToString());
+            Main.Newspaper = Newspapers.FirstOrDefault((x) => x.NewspaperId.Equals(newspaperID));
+
             Main.NavigationService.Navigate("EgyenlitoWin8.ArticlesView");
         }
     }

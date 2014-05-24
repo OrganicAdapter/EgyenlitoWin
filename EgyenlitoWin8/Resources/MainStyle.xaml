@@ -1,0 +1,84 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:EgyenlitoWin8.Resources">
+    
+    <Style TargetType="Grid">
+        <Setter Property="Background" Value="#dbf9ff" />
+    </Style>
+    
+    <Style TargetType="CommandBar">
+        <Setter Property="Background" Value="#FF000064" />
+    </Style>
+
+    <Style TargetType="AppBar">
+        <Setter Property="Background" Value="#FF000064" />
+    </Style>
+
+    <Style TargetType="GridView">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+    </Style>
+    
+    <Style TargetType="ListBox">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Padding" Value="20" />
+    </Style>
+    
+    <Style TargetType="Image">
+        <Setter Property="Margin" Value="20" />
+    </Style>
+    
+    <Style TargetType="Slider">
+        <Setter Property="MaxWidth" Value="300" />
+        <Setter Property="Orientation" Value="Horizontal" />
+        <Setter Property="FlowDirection" Value="RightToLeft" />
+        <Setter Property="IsThumbToolTipEnabled" Value="False" />
+    </Style>
+    
+    <Style TargetType="FlipView">
+        <Setter Property="Background" Value="White" />
+    </Style>
+    
+    <!-- Inner newspaper -->
+    
+    <Style TargetType="Grid" x:Key="NewspaperGrid">
+        <Setter Property="Margin" Value="20" />
+    </Style>
+    
+    <Style TargetType="Rectangle" x:Key="ImageRectangle">
+        <Setter Property="Fill" Value="White" />
+        <Setter Property="Opacity" Value=".8" />
+    </Style>
+
+    <Style TargetType="StackPanel" x:Key="ImageStackPanel">
+        <Setter Property="Margin" Value="10" />
+    </Style>
+    
+    <Style TargetType="Viewbox" x:Key="ImageViewbox">
+        <Setter Property="MaxHeight" Value="20" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+    </Style>
+    
+    <Style TargetType="TextBlock" x:Key="ImageTitleTextBlock">
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="FontWeight" Value="ExtraBold" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+    </Style>
+
+    <Style TargetType="TextBlock" x:Key="ImageTextBlock" BasedOn="{StaticResource ImageTitleTextBlock}">
+        <Setter Property="FontWeight" Value="Normal" />
+    </Style>
+
+    <Style TargetType="Viewbox" x:Key="ImageViewBox">
+        <Setter Property="MaxHeight" Value="20" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+    </Style>
+    
+    <!-- Articles -->
+    
+    <Style TargetType="TextBlock" x:Key="ArticleTextBlock">
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="FontWeight" Value="ExtraBold" />
+    </Style>
+</ResourceDictionary>

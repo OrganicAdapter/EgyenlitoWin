@@ -10,19 +10,19 @@
     mc:Ignorable="d">
 
     <Page.TopAppBar>
-        <CommandBar Background="#FF000064">
+        <CommandBar>
             <CommandBar.SecondaryCommands>
                 <AppBarButton Icon="Back" Label="Vissza" Command="{Binding GoBack}"/>
             </CommandBar.SecondaryCommands>
             <CommandBar.PrimaryCommands>
-                <AppBarButton Icon="Back" Label="Megosztás" Command="{Binding Authenticate}"/>
+                <AppBarButton Icon="Like" Label="Megosztás" Command="{Binding Authenticate}"/>
             </CommandBar.PrimaryCommands>
         </CommandBar>
     </Page.TopAppBar>
     
     <Page.BottomAppBar>
-        <AppBar Background="#FF000064">
-            <Grid>
+        <AppBar>
+            <Grid Background="Transparent">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="5*" />
@@ -30,12 +30,8 @@
                 </Grid.ColumnDefinitions>
                 
                 <Slider Grid.Column="1"
-                        MaxWidth="300"
                         Minimum="0" Maximum="500" 
-                        Value="{Binding ZoomLevel, Mode=TwoWay}"
-                        Orientation="Horizontal"
-                        FlowDirection="RightToLeft"
-                        IsThumbToolTipEnabled="False"/>
+                        Value="{Binding ZoomLevel, Mode=TwoWay}"/>
             </Grid>
         </AppBar>
     </Page.BottomAppBar>
@@ -51,8 +47,7 @@
 
     <Grid x:Name="mainGrid">
         <FlipView x:Name="list"
-                  ItemsSource="{Binding PDFPages}"
-                  Background="White">
+                  ItemsSource="{Binding PDFPages}">
             <FlipView.ItemTemplate>
                 <DataTemplate>
                     <ScrollViewer Padding="{Binding ElementName=mainGrid, Path=DataContext.ZoomLevel, Converter={StaticResource IntegerToMarginConverter}, Mode=OneWay}"
