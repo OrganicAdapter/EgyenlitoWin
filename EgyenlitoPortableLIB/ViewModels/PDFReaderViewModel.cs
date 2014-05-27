@@ -33,6 +33,7 @@ namespace EgyenlitoPortableLIB.ViewModels
 
         public RelayCommand<Uri> Post { get; set; }
         public RelayCommand Authenticate { get; set; }
+        public RelayCommand Delete { get; set; }
 
 
         public PDFReaderViewModel()
@@ -41,6 +42,7 @@ namespace EgyenlitoPortableLIB.ViewModels
 
             Post = new RelayCommand<Uri>((x) => ExecutePost(x));
             Authenticate = new RelayCommand(ExecuteAuthenticate);
+            Delete = new RelayCommand(ExecuteDelete);
         }
 
         private async void DownloadPDF(Article article)
@@ -64,6 +66,13 @@ namespace EgyenlitoPortableLIB.ViewModels
         private void ExecuteAuthenticate()
         {
             Main.FacebookManager.Authenticate();
+        }
+
+        private void ExecuteDelete()
+        {
+            Main.LocalDataManager.DeleteArticle(Main.Article.ArticleId);
+            Main.LocalStorage.Delete(Main.Article.ArticleId);
+            Main.NavigationService.GoBack();
         }
     }
 }

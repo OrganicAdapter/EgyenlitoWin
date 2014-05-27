@@ -11,5 +11,6 @@ namespace EgyenlitoPortableLIB.Models
     {
         void Save(XDocument xDoc);
         Task<XDocument> Load();
+        void Delete(int id);
     }
 }

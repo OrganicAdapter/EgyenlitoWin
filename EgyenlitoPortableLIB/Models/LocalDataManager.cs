@@ -20,7 +20,7 @@ namespace EgyenlitoPortableLIB.Models
             LocalArticles = new ObservableCollection<Article>();
         }
 
-        public async void GetArticles()
+        public async Task GetArticles()
         {
             XDocument xDoc = await MainViewModel.Instance.LocalStorage.Load();
 
@@ -58,6 +58,13 @@ namespace EgyenlitoPortableLIB.Models
         public void AddArticle(Article article)
         {
             LocalArticles.Add(article);
+            SaveArticles();
+        }
+
+        public void DeleteArticle(int articleId)
+        {
+            var article = LocalArticles.First((x) => x.ArticleId == articleId);
+            LocalArticles.Remove(article);
             SaveArticles();
         }
 

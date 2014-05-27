@@ -13,6 +13,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Networking.Connectivity;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -45,7 +46,7 @@ namespace EgyenlitoWin8
         /// will be used such as when the application is launched to open a specific file.
         /// </summary>
         /// <param name="e">Details about the launch request and process.</param>
-        protected override void OnLaunched(LaunchActivatedEventArgs e)
+        protected async override void OnLaunched(LaunchActivatedEventArgs e)
         {
 
 #if DEBUG
@@ -64,7 +65,7 @@ namespace EgyenlitoWin8
             Main.DataManager = new OnlineDataManager();
             Main.FacebookManager = new FacebookManager();
 
-            Main.LocalDataManager.GetArticles();
+            await Main.LocalDataManager.GetArticles();
 
             Frame rootFrame = Window.Current.Content as Frame;
 
@@ -93,7 +94,12 @@ namespace EgyenlitoWin8
                 // When the navigation stack isn't restored navigate to the first page,
                 // configuring the new page by passing required information as a navigation
                 // parameter
-                rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                ConnectionProfile connectionProfile = NetworkInformation.GetInternetConnectionProfile();
+
+                if (connectionProfile != null && connectionProfile.GetNetworkConnectivityLevel() == NetworkConnectivityLevel.InternetAccess)
+                    rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                else
+                    rootFrame.Navigate(typeof(LocalsView), e.Arguments);
             }
             // Ensure the current window is active
             Window.Current.Activate();

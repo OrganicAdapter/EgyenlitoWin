@@ -37,5 +37,11 @@ namespace EgyenlitoWin8.Others
                 return xDoc;
             }
         }
+
+        public async void Delete(int id)
+        {
+            StorageFolder tempFolder = await ApplicationData.Current.TemporaryFolder.GetFolderAsync(id.ToString());
+            await tempFolder.DeleteAsync(StorageDeleteOption.PermanentDelete);
+        }
     }
 }

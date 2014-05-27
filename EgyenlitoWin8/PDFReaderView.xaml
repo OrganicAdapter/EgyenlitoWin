@@ -13,6 +13,7 @@
         <CommandBar>
             <CommandBar.SecondaryCommands>
                 <AppBarButton Icon="Back" Label="Vissza" Command="{Binding GoBack}"/>
+                <AppBarButton Icon="Delete" Label="Törlés" Command="{Binding Delete}" />
             </CommandBar.SecondaryCommands>
             <CommandBar.PrimaryCommands>
                 <AppBarButton Icon="Like" Label="Megosztás" Command="{Binding Authenticate}"/>
