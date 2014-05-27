@@ -27,6 +27,7 @@ namespace EgyenlitoPortableLIB.ViewModels
         public RelayCommand SendEmail { get; set; }
         public RelayCommand<string> OpenWebPage { get; set; }
 
+
         public ViewModelBase()
         {
             Main = MainViewModel.Instance;

@@ -119,6 +119,9 @@
     <Compile Include="Converters\StringToBitmapConverter.cs" />
     <Compile Include="Facebook\FacebookHelper.cs" />
     <Compile Include="Facebook\FacebookManager.cs" />
+    <Compile Include="LocalsView.xaml.cs">
+      <DependentUpon>LocalsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -173,6 +176,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="ArticlesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LocalsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

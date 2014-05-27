@@ -33,13 +33,14 @@ namespace EgyenlitoPortableLIB.ViewModels
 
 
         public RelayCommand<object> Open { get; set; }
-
+        public RelayCommand LocalArticles { get; set; }
 
         public NewspapersViewModel()
         {
             GetNewspapers();
 
             Open = new RelayCommand<object>((x) => ExecuteOpen(x));
+            LocalArticles = new RelayCommand(ExecuteLocalArticles);
         }
 
         private async void GetNewspapers()
@@ -53,6 +54,11 @@ namespace EgyenlitoPortableLIB.ViewModels
             Main.Newspaper = Newspapers.FirstOrDefault((x) => x.NewspaperId.Equals(newspaperID));
 
             Main.NavigationService.Navigate("EgyenlitoWin8.ArticlesView");
+        }
+
+        private void ExecuteLocalArticles()
+        {
+            Main.NavigationService.Navigate("EgyenlitoWin8.LocalsView");
         }
     }
 }
